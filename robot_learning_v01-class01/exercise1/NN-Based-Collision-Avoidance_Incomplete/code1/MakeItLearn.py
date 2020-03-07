@@ -17,20 +17,28 @@ NumClasses = 1 # Output Size
 NumEpochs = 25
 HiddenSize = 10
 
+learning_rate = 0.001
+
 # Create The Neural Network Model
 class Net(nn.Module):
     def __init__(self, InputSize,NumClasses):
         super(Net, self).__init__()
 		###### Define The Feed Forward Layers Here! ######
+        self.fc1 = nn.Linear(InputSize, HiddenSize) 
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(HiddenSize, NumClasses)
         
     def forward(self, x):
 		###### Write Steps For Forward Pass Here! ######
+        out = self.fc1(x)
+        out = self.relu(out)
+        out = self.fc2(out)
         return out
 
 net = Net(InputSize, NumClasses)     
 
-criterion = ###### Define The Loss Function Here! ######
-optimizer = ###### Define The Optimizer Here! ######
+criterion = nn.MSELoss() ###### Define The Loss Function Here! ######
+optimizer = torch.optim.Adam(net.parameters(), lr=learning_rate) ###### Define The Optimizer Here! ######
 
 ##################################################################################################
 
